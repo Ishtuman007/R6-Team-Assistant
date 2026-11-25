@@ -1,8 +1,11 @@
 import java.util.Scanner;
-
+import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
+
+        // gets the list of operators from the csv file.
+        ArrayList<Operator> operators = OperatorDatabase.loadOperators("data/operators.csv");
         int choice = 0;
         // Welcome message
         System.out.println("==================================");
