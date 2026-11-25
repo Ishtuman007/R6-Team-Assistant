@@ -1,6 +1,3 @@
-# Java compiled files
 *.class
-
-# IDE files
 .vscode/
 .idea/
