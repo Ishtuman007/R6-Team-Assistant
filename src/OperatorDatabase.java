@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class OperatorDatabase {
-    private static ArrayList<Operator> loadOperators(String filename) {
+    public static ArrayList<Operator> loadOperators(String filename) {
         // This ArrayList will hold all the operators loaded from the CSV file.
         // I used ArrayList also because it can change in size as new operators are added to the csv file database.
         ArrayList<Operator> operators = new ArrayList<>();
@@ -27,7 +27,7 @@ public class OperatorDatabase {
             }
         } catch (IOException e) {
             // Catches unreadable files without crashing the program.
-            System.out.println("Error loadingoperators: " + e.getMessage());
+            System.out.println("Error loading operators: " + e.getMessage());
         }
         // complete database so other classes can use it.
         return operators;
