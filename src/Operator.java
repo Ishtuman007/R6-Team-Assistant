@@ -26,4 +26,15 @@ public class Operator {
     public String getSide() {
         return side;
     }
+    
+    // Puts the operator's information into a readable string format.
+    @Override 
+    public String toString() {
+        return "Operator{" +
+                "name='" + name + '\'' +
+                ", side='" + side + '\'' +
+                ", role='" + role + '\'' +
+                ", utility='" + utility + '\'' +
+                '}';
+    }
 }
