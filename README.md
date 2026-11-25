@@ -20,7 +20,11 @@ Operator statistics and updates based on current game balancing updates.
 
 Tech Stack: 
 Language: Java 
-Libraries and packages: Java standard library: ArrayList, HashMap (maybe), and Random.
+Libraries and packages: Java standard library: 
+Scanner - to read terminal input.
+ArrayList - to store the collection of operators and team selections that might change.
+HashMap (maybe) - store and retrieve operator information by using their name as a key.
+and Random - select the operators randomly for the random balanced team generator.
 Input: Select map, sites, sides, bans, and operators.
-Data storage: CSV or just text files
+Data storage: CSV and txt (maybe) files which include operators.csv (for operators), maps.csv (for maps), and teams.txt (maybe for saved team compositions if there is a save/load feature).
 External tools: Git and GitHub
