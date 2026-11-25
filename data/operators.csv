@@ -1,1 +1,21 @@
-
+name,side,role,utility
+Sledge,Attack,Breacher,Soft Breach
+Thermite,Attack,Hard Breacher,Hard Breach
+Thatcher,Attack,Support,EMP
+Ash,Attack,Entry,Explosives
+Zofia,Attack,Entry,Explosives
+Buck,Attack,Breacher,Soft Breach
+Ace,Attack,Hard Breacher,Hard Breach
+Hibana,Attack,Hard Breacher,Hard Breach
+Montagne,Attack,Shield,Protection
+Lion,Attack,Intel,Scan
+Dokkaebi,Attack,Intel,Phone Hack
+Mute,Defend,Support,Jammer
+Smoke,Defend,Area Denial,Gas
+Kapkan,Defend,Trap,Explosives
+Jager,Defend,Support,Projectile Denial
+Bandit,Defend,Anti-Breach,Shock
+Lesion,Defend,Trap,Mines
+Valkyrie,Defend,Intel,Cameras
+Mira,Defend,Intel,Black Mirror
+Kaid,Defend,Anti-Breach,Electroclaw
