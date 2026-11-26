@@ -28,8 +28,7 @@ public class Main {
             switch (choice) {
                 case 1:
                     // Call the manual team builder method
-                    //manualTeamBuilder();
-                    System.out.println("Manual Team Builder is not implemented yet.");
+                    ArrayList<Operator> team = TeamBuilder.selectOperators(operators, input);
                     break;
                 case 2:
                     // Call the random team generator method
