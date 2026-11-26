@@ -15,7 +15,7 @@ public class Main {
 
         System.out.println("Build balanced teams and find the");
         System.out.println("best operator for every situation.");
-        
+
         // Run until they exit.
         while (choice != 3) {
             // Main menu
@@ -34,7 +34,7 @@ public class Main {
 
                     String selectedMap = chooseMap(maps, input);
                     System.out.println("Selected map/site: " + selectedMap);
-
+ 
                     ArrayList<String> bannedOperators = new ArrayList<>();
 
                     System.out.println("\nSelect Attack bans:");
@@ -54,7 +54,7 @@ public class Main {
 
                     if (!team.isEmpty()) {
                         Operator recommendation = OperatorRecommender.recommendOperator(
-                                        operators, team, team.get(0).getSide(), bannedOperators);
+                            operators, team, team.get(0).getSide(), bannedOperators);
 
                         if (recommendation != null) {
                             System.out.println("\nRecommended Operator: " + recommendation.getName());
@@ -67,7 +67,7 @@ public class Main {
                 }
 
                 case 2: {
-                    
+
                     input.nextLine();
 
                     String selectedMap = chooseMap(maps, input);
