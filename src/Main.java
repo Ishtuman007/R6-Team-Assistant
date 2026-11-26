@@ -4,6 +4,12 @@ public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
+        ArrayList<String> maps = MapDatabase.loadMaps("data/maps.csv");
+
+        for (String map : maps) {
+            System.out.println(map);
+        }
+        
         // gets the list of operators from the csv file.
         ArrayList<Operator> operators = OperatorDatabase.loadOperators("data/operators.csv");
         int choice = 0;
@@ -28,7 +34,8 @@ public class Main {
             switch (choice) {
                 case 1:
                     // Call the manual team builder method
-                    ArrayList<Operator> team = TeamBuilder.selectOperators(operators, input);
+                    ArrayList<Operator> team =
+                    TeamBuilder.selectOperators(operators, input);
                     break;
                 case 2:
                     // Call the random team generator method
