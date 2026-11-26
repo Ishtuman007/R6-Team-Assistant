@@ -33,9 +33,9 @@ public class Main {
             // Handle user choice
             switch (choice) {
                 case 1:
-                    // Call the manual team builder method
-                    ArrayList<Operator> team =
-                    TeamBuilder.selectOperators(operators, input);
+                    ArrayList<Operator> team = TeamBuilder.selectOperators(operators, input);
+
+                    TeamAnalyzer.analyzeTeam(team);
                     break;
                 case 2:
                     // Call the random team generator method
