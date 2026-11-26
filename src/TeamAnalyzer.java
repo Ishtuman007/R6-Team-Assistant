@@ -10,13 +10,14 @@ public class TeamAnalyzer {
         System.out.println("\n========== TEAM ANALYSIS ==========");
         if (team.isEmpty()) {
             System.out.println("No operators selected.");
+            System.out.println("==================================");
             return;
         }
         // Displays the team size and collects information about unique roles and utility types.
         for (Operator op : team) {
             System.out.println(op.getName() + " | Role: " + op.getRole() + " | Utility: " + op.getUtility());
             // Onyl add a role once so I can see which roles are missing.
-            if (!roles.contains(op.getRole())) {
+            if (!containsIgnoreCase(roles, op.getRole())) {
                 roles.add(op.getRole());
             }
 
@@ -31,13 +32,20 @@ public class TeamAnalyzer {
             System.out.println("- " + role);
         }
 
+        String side = team.get(0).getSide();
         // Compare roles present to the roles used in the project 
         // Will grow as operators are added to the database
-        String[] impRoles = { "Entry", "Breacher", "Hard Breacher", "Support", "Intel", "Trap", "Shield"};
-        System.out.println("\nMissing Roles: ");
+        String[] impRoles;
+        if (side.equalsIgnoreCase("Attack")) {
+            impRoles = new String[] {"Entry", "Breacher", "Hard Breacher", "Support", "Intel", "Shield"};
+        } else {
+            impRoles = new String[] {"Support", "Area Denial", "Trap", "Anti-Breach", "Intel"};
+        }
+
+        System.out.println("\nPotentially Missing Roles: ");
         boolean missingRole = false;
         for (String role : impRoles) {
-            if (!roles.contains(role)) {
+            if (!containsIgnoreCase(roles, role)) {
                 System.out.println("- " + role);
                 missingRole = true;
             }
@@ -83,5 +91,15 @@ public class TeamAnalyzer {
         }
 
         System.out.println("==================================");
+    }
+
+    // Reuse the comparison so roles are checked no matter the capitalization.
+    private static boolean containsIgnoreCase(ArrayList<String> values, String target) {
+        for (String value : values) {
+            if (value.equalsIgnoreCase(target)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -28,31 +28,37 @@ public class Bans {
                 break;
             }
 
-            boolean foundOp = false;;
+            Operator selectedOp = null;
             for (Operator op : availableOperators) {
                 if (op.getName().equalsIgnoreCase(name)) {
-                    foundOp = true;
+                    selectedOp = op;
                     break;
                 }
             }
+
             // Error statments.
-            if (!foundOp) {
+            if (selectedOp == null) {
                 System.out.println("Operator not found. Please try again.");
-            } else if (bannedOperators.contains(name)) {
+            } else if (isAlreadyBanned(bannedOperators, selectedOp.getName())) {
                 System.out.println("Operator already banned. Please select a different operator.");
             } else {
-                // Add the operator to the banned ArrayList.
-                // Also store the spelling from the official database so it can be 
+                // Store the spelling from the official database so it can be 
                 // used to compare with the database later.
-                for (Operator op : availableOperators) {
-                    if (op.getName().equalsIgnoreCase(name)) {
-                        bannedOperators.add(op.getName());
-                        break;
-                    }
-                }
-                System.out.println(name + " has been banned.");
+                bannedOperators.add(selectedOp.getName());
+                System.out.println(selectedOp.getName() + " has been banned.");
             }
         }
         return bannedOperators;
+    }
+
+    // Compare without any case sensitivity because I found that error when testing.
+    private static boolean isAlreadyBanned(ArrayList<String> bannedOperators, String name) {
+        for (String banned : bannedOperators) {
+            if (banned.equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
