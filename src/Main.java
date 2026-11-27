@@ -1,5 +1,7 @@
+
 import java.util.Scanner;
 import java.util.ArrayList;
+
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
@@ -17,24 +19,26 @@ public class Main {
         System.out.println("best operator for every situation.");
 
         // Run until they exit.
-        while (choice != 3) {
+        while (choice != 6) {
             // Main menu
             System.out.println("\n1. Manual Team Builder");
             System.out.println("2. Random Team Generator");
-            System.out.println("3. Exit");
+            System.out.println("3. View Saved Teams");
+            System.out.println("4. Load Saved Team");
+            System.out.println("5. Delete Saved Team");
+            System.out.println("6. Exit");
 
             System.out.print("\nSelect an option: ");
             choice = input.nextInt();
+            input.nextLine();
 
             // Handle user's choice
             switch (choice) {
                 case 1: {
 
-                    input.nextLine();
-
                     String selectedMap = chooseMap(maps, input);
                     System.out.println("Selected map/site: " + selectedMap);
- 
+
                     ArrayList<String> bannedOperators = new ArrayList<>();
 
                     System.out.println("\nSelect Attack bans:");
@@ -44,12 +48,13 @@ public class Main {
                     System.out.println("\nSelect Defense bans:");
                     bannedOperators.addAll(Bans.selectBans(operators, "Defend", input));
 
-                    // Remove banned operators before team selection.
+                    // Remove banned operators before selecting teams.
                     ArrayList<Operator> availableOperators = filterBannedOperators(operators, bannedOperators);
 
                     ArrayList<Operator> team = TeamBuilder.selectOperators(availableOperators, input);
 
-                    // Analyze the selected team and suggest another operator.
+                    // Analyze the selected team and suggest another operator. 
+                    // Doing the 'team building' part.
                     TeamAnalyzer.analyzeTeam(team);
 
                     if (!team.isEmpty()) {
@@ -63,12 +68,15 @@ public class Main {
                         }
                     }
 
+                    // Ask if the user wants to save the completed team if it is a full team.
+                    if (team.size() == 5) {
+                        askToSaveTeam(team, input);
+                    }
+
                     break;
                 }
 
                 case 2: {
-
-                    input.nextLine();
 
                     String selectedMap = chooseMap(maps, input);
                     System.out.println("Selected map/site: " + selectedMap);
@@ -92,7 +100,8 @@ public class Main {
                         break;
                     }
 
-                    // Get bans for both sides before generating the team.
+                    // Get bans for both sides before generating the team. 
+                    // Sides can switch so asking for both makes sense for late game situations.
                     ArrayList<String> bannedOperators = new ArrayList<>();
 
                     System.out.println("\nSelect Attack bans:");
@@ -106,16 +115,72 @@ public class Main {
 
                     TeamAnalyzer.analyzeTeam(team);
 
+                    // Ask if the user wants to save the completed team if the team complete.
+                    if (team.size() == 5) {
+                        askToSaveTeam(team, input);
+                    }
+
                     break;
                 }
+
                 case 3:
+                    // Show all the teams that have been saved to the file so far.
+                    SaveLoadManager.viewSavedTeams();
+                    break;
+
+                case 4: {
+                    // Show saved teams so the user knows which team can be loaded.
+                    SaveLoadManager.viewSavedTeams();
+
+                    System.out.print("\nEnter the name of the team to load: ");
+                    String teamName = input.nextLine();
+
+                    // Load the selected team using the operator database.
+                    ArrayList<Operator> loadedTeam = SaveLoadManager.loadTeam(teamName, operators);
+
+                    // Analyze the team after it has been loaded.
+                    if (!loadedTeam.isEmpty()) {
+                        TeamAnalyzer.analyzeTeam(loadedTeam);
+                    }
+
+                    break;
+                }
+
+                case 5: {
+                    // Show saved teams before asking which one to delete.
+                    SaveLoadManager.viewSavedTeams();
+
+                    System.out.print("\nEnter the name of the team to delete: ");
+                    String teamName = input.nextLine();
+
+                    // Remove the selected team from the saved teams file.
+                    SaveLoadManager.deleteTeam(teamName);
+                    break;
+                }
+
+                case 6:
                     System.out.println("Thanks for using the R6 Team Assistant!");
                     break;
+
                 default:
                     System.out.println("Invalid option. Please try again.");
             }
         }
         input.close();
+    }
+
+    // Ask the user if they want to save their completed team.
+    private static void askToSaveTeam(ArrayList<Operator> team, Scanner input) {
+        System.out.print("\nWould you like to save this team? (yes/no): ");
+        String answer = input.nextLine();
+
+        if (answer.equalsIgnoreCase("yes")) {
+            System.out.print("Enter a name for this team: ");
+            String teamName = input.nextLine();
+
+            // Save the team under the name given by the user.
+            SaveLoadManager.saveTeam(teamName, team);
+        }
     }
 
     private static String chooseMap(ArrayList<String> maps, Scanner input) {
@@ -133,7 +198,7 @@ public class Main {
         int selection = input.nextInt();
         input.nextLine();
 
-        // Invalid selection does not crash the project.
+        // Makes sure an invalid selection does not crash the project.
         if (selection < 1 || selection > maps.size()) {
             System.out.println("Invalid selection.");
             return "No map selected";
